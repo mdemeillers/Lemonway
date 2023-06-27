@@ -1,0 +1,103 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "version": "v2",
+    "title": "Lemonway DirectKit API 2.0"
+  },
+  "host": "localhost:44396",
+  "basePath": "/webservice",
+  "schemes": [
+    "https"
+  ],
+  "paths": {
+    "/v2/accounts/{accountid}": {
+      "get": {
+        "tags": [
+          "Accounts | Admin"
+        ],
+        "summary": "Get Detailed Payment Account Data",
+        "description": "Enables your system to get detailed payment account information including:   \r\n* Payment account balance   \r\n* Account type    \r\n* Account status (if blocked or not) \r\n* Account email address",
+        "operationId": "Accounts_AccountSingleGet",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "accountid",
+            "in": "path",
+            "description": "Account ID",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "Authorization",
+            "in": "header",
+            "description": "Authorization bearer (OAuth 2)",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "PSU-Accept-Language",
+            "in": "header",
+            "description": "Response language accepted by final client (PSU). English by default",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "PSU-IP-Address",
+            "in": "header",
+            "description": "IP address of the final client (PSU).",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "PSU-User-Agent",
+            "in": "header",
+            "description": "User-agent of the final client (PSU).",
+            "required": false,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/AccountDetailsOutput"
+            },
+            "examples": {
+              "application/json": {
+                "account": {
+                  "id": "33612345678",
+                  "internalId": 3673,
+                  "firstname": "Jean",
+                  "lastname": "Dupont",
+                  "balance": 2390,
+                  "email": "jean.dupont@email.com",
+                  "status": 1,
+                  "isblocked": true,
+                  "accountType": 0,
+                  "adresse": null,
+                  "birth": null,
+                  "isDebtor": false,
+                  "payerOrBeneficiary": 1
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "500": {
+            "description": "InternalServerError"
+          }
+        }
+      }
+    },
+    "/v2/accounts/{accountid}/documents": {
+      "get": {
+        "tags": [
+          "Accounts | Admin"
+        ],
